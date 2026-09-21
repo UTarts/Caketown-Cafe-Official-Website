@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-black: #111111;
+  --color-white: #FFFFFF;
+  --color-cream: #FFF7EE;
+  --color-orange: #F47A1F;
+  --color-cherry: #E43838;
+  --color-chocolate: #4A2418;
+  --color-peach: #FFDCCB;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #FFF7EE;
+  color: #111111;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #F47A1F;
+  color: #FFFFFF;
+}
+
+/* Hide scrollbars for horizontal carousels */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Clip-path utilities for organic shapes */
+.clip-blob {
+  clip-path: path('M 100,0 C 145,0 180,20 180,60 C 180,100 160,130 130,145 C 100,160 60,155 30,140 C 10,130 0,100 0,70 C 0,30 25,0 60,0 Z');
+}
+
+.clip-wave-top {
+  clip-path: ellipse(75% 100% at 50% 100%);
+}
+
+.clip-arch {
+  clip-path: path('M 0,200 L 0,100 C 0,45 55,0 100,0 C 145,0 200,45 200,100 L 200,200 Z');
+}
+
+/* Scroll snap for carousels */
+.snap-x-mandatory {
+  scroll-snap-type: x mandatory;
+}
+.snap-center {
+  scroll-snap-align: center;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
