@@ -16,7 +16,6 @@ export function FoodCarousel({ items, textOnDark = false }: FoodCarouselProps) {
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-
     const handleScroll = () => {
       const children = Array.from(el.children) as HTMLElement[];
       if (children.length === 0) return;
@@ -30,7 +29,6 @@ export function FoodCarousel({ items, textOnDark = false }: FoodCarouselProps) {
       });
       setActiveIndex(closest);
     };
-
     el.addEventListener('scroll', handleScroll, { passive: true });
     return () => el.removeEventListener('scroll', handleScroll);
   }, []);
@@ -51,12 +49,12 @@ export function FoodCarousel({ items, textOnDark = false }: FoodCarouselProps) {
     <div className="relative">
       <div
         ref={scrollRef}
-        className="no-scrollbar flex overflow-x-auto snap-x-mandatory py-12 px-[12vw] cursor-grab active:cursor-grabbing"
+        className="no-scrollbar flex overflow-x-auto snap-x-mandatory py-10 px-[12vw] cursor-grab active:cursor-grabbing"
       >
         {items.map((item, i) => {
           const isActive = i === activeIndex;
           const distance = Math.abs(i - activeIndex);
-          const scale = isActive ? 1 : Math.max(0.68, 1 - distance * 0.16);
+          const scale = isActive ? 1 : Math.max(0.75, 1 - distance * 0.15);
           const opacity = isActive ? 1 : Math.max(0.4, 1 - distance * 0.25);
           const color = platformColors[i % platformColors.length];
           const isLight = color === '#FFF7EE' || color === '#FFDCCB';
@@ -65,30 +63,28 @@ export function FoodCarousel({ items, textOnDark = false }: FoodCarouselProps) {
             <div
               key={item.id}
               className="snap-center flex-shrink-0 flex flex-col items-center justify-center"
-              style={{ width: '76vw', maxWidth: '380px', minWidth: '260px' }}
+              style={{ width: '70vw', maxWidth: '320px', minWidth: '240px' }}
               onClick={() => scrollToIndex(i)}
             >
               <div
                 className="relative transition-all duration-500 ease-out"
                 style={{ transform: `scale(${scale})`, opacity }}
               >
-                {/* Colored rectangular platform */}
                 <div
-                  className="relative rounded-2xl flex flex-col items-center justify-end pb-7 pt-24"
+                  className="relative rounded-[2rem] flex flex-col items-center justify-end pb-6 pt-20 shadow-lg"
                   style={{
                     backgroundColor: color,
-                    height: '300px',
+                    height: '240px', // Shorter platform height
                     width: '100%',
                     transition: 'background-color 0.4s ease',
                   }}
                 >
-                  {/* Food image breaking out above the platform */}
                   <div
                     className="absolute left-1/2 -translate-x-1/2 z-10"
                     style={{
-                      top: '-70px',
-                      width: '170px',
-                      height: '170px',
+                      top: '-50px',
+                      width: '130px', // Much smaller image
+                      height: '130px', // Much smaller image
                       transform: isActive ? 'translateY(-4px)' : 'translateY(0)',
                       transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
                     }}
@@ -97,25 +93,17 @@ export function FoodCarousel({ items, textOnDark = false }: FoodCarouselProps) {
                       src={item.image}
                       alt={item.name}
                       loading="lazy"
-                      className="w-full h-full object-cover rounded-xl shadow-2xl shadow-caketown-black/20"
+                      className="w-full h-full object-contain drop-shadow-2xl" // Removes frames and uses drop-shadow
                     />
                   </div>
-
-                  {/* Product text on the platform */}
                   <div className="relative z-20 text-center px-4">
-                    <h3
-                      className={`text-base font-display font-bold ${isLight ? 'text-caketown-black' : 'text-white'}`}
-                    >
+                    <h3 className={`text-base font-display font-bold ${isLight ? 'text-caketown-black' : 'text-white'}`}>
                       {item.name}
                     </h3>
-                    <p
-                      className={`text-xs mt-1 max-w-[220px] mx-auto ${isLight ? 'text-caketown-black/50' : 'text-white/60'}`}
-                    >
+                    <p className={`text-xs mt-1 max-w-[200px] mx-auto line-clamp-2 ${isLight ? 'text-caketown-black/60' : 'text-white/70'}`}>
                       {item.description}
                     </p>
-                    <p
-                      className={`text-sm font-display font-bold mt-2 ${isLight ? 'text-caketown-orange' : 'text-white'}`}
-                    >
+                    <p className={`text-sm font-display font-bold mt-2 ${isLight ? 'text-caketown-orange' : 'text-white'}`}>
                       {item.price}
                     </p>
                   </div>
@@ -125,15 +113,13 @@ export function FoodCarousel({ items, textOnDark = false }: FoodCarouselProps) {
           );
         })}
       </div>
-
-      {/* Dot indicators */}
-      <div className="flex justify-center gap-2 mt-4">
+      <div className="flex justify-center gap-2 mt-2">
         {items.map((_, i) => (
           <button
             key={i}
             onClick={() => scrollToIndex(i)}
             aria-label={`Go to item ${i + 1}`}
-            className="h-2 rounded-full transition-all duration-300"
+            className="h-1.5 rounded-full transition-all duration-300"
             style={{
               width: i === activeIndex ? '24px' : '8px',
               backgroundColor: i === activeIndex

@@ -1,213 +1,80 @@
-export type MenuCategory = 'cakes' | 'pastries' | 'desserts' | 'coffee' | 'snacks';
+export type MenuCategory = 'cakes' | 'pastries' | 'desserts' | 'coffee' | 'shakes' | 'donuts';
 
 export interface MenuItem {
   id: string;
   name: string;
-  description: string;
-  price: string;
-  image: string;
   category: MenuCategory;
-  featured?: boolean;
-}
-
-export interface Category {
-  id: MenuCategory;
-  label: string;
+  description: string;
   image: string;
-  color: string;
+  price?: string; // Made optional to prevent TypeScript errors in other components
 }
 
-export const categories: Category[] = [
-  {
-    id: 'cakes',
-    label: 'Cakes',
-    image: 'https://images.pexels.com/photos/28402363/pexels-photo-28402363.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    color: '#F47A1F',
-  },
-  {
-    id: 'pastries',
-    label: 'Pastries',
-    image: 'https://images.pexels.com/photos/14122678/pexels-photo-14122678.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    color: '#E43838',
-  },
-  {
-    id: 'desserts',
-    label: 'Desserts',
-    image: 'https://images.pexels.com/photos/37418881/pexels-photo-37418881.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    color: '#4A2418',
-  },
-  {
-    id: 'coffee',
-    label: 'Coffee',
-    image: 'https://images.pexels.com/photos/15801079/pexels-photo-15801079.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    color: '#F47A1F',
-  },
-  {
-    id: 'snacks',
-    label: 'Snacks',
-    image: 'https://images.pexels.com/photos/23948793/pexels-photo-23948793.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    color: '#E43838',
-  },
+// ==========================================
+// 🚨 THIS WAS MISSING AND CAUSED THE CRASH
+// ==========================================
+export const categories: { id: MenuCategory; label: string }[] = [
+  { id: 'cakes', label: 'Cakes' },
+  { id: 'pastries', label: 'Pastries' },
+  { id: 'desserts', label: 'Desserts' },
+  { id: 'coffee', label: 'Coffee' },
+  { id: 'shakes', label: 'Shakes' },
+  { id: 'donuts', label: 'Donuts' },
 ];
 
 export const menuItems: MenuItem[] = [
-  {
-    id: 'choco-fudge',
-    name: 'Chocolate Fudge Cake',
-    description: 'Rich layered chocolate sponge with silky fudge ganache.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/28402363/pexels-photo-28402363.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'cakes',
-    featured: true,
-  },
-  {
-    id: 'strawberry-cream',
-    name: 'Strawberry Cream Cake',
-    description: 'Vanilla sponge, fresh strawberries and whipped cream.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/18160775/pexels-photo-18160775.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'cakes',
-  },
-  {
-    id: 'celebration-cake',
-    name: 'Celebration Cake',
-    description: 'Custom-decorated cakes for every special occasion.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/32191355/pexels-photo-32191355.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'cakes',
-  },
-  {
-    id: 'pistachio-cake',
-    name: 'Pistachio Chocolate Cake',
-    description: 'Decadent chocolate with crunchy pistachio topping.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/30576077/pexels-photo-30576077.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'cakes',
-  },
-  {
-    id: 'butter-croissant',
-    name: 'Butter Croissant',
-    description: 'Flaky, golden, baked fresh every morning.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/14122678/pexels-photo-14122678.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'pastries',
-    featured: true,
-  },
-  {
-    id: 'chocolate-croissant',
-    name: 'Chocolate Croissant',
-    description: 'Buttery croissant filled with rich chocolate.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/3892468/pexels-photo-3892468.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'pastries',
-  },
-  {
-    id: 'berry-tart',
-    name: 'Berry Tart',
-    description: 'Crisp pastry shell with fresh berries and cream.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/17650199/pexels-photo-17650199.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'pastries',
-  },
-  {
-    id: 'choco-tart',
-    name: 'Chocolate Tart',
-    description: 'Dark chocolate ganache in a buttery tart shell.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/31544097/pexels-photo-31544097.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'desserts',
-    featured: true,
-  },
-  {
-    id: 'cheesecake',
-    name: 'Berry Cheesecake',
-    description: 'Creamy cheesecake with raspberry sauce.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/37418881/pexels-photo-37418881.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'desserts',
-  },
-  {
-    id: 'blueberry-cheesecake',
-    name: 'Blueberry Cheesecake',
-    description: 'Fresh blueberries atop silky cheesecake.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/37857737/pexels-photo-37857737.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'desserts',
-  },
-  {
-    id: 'macaron-assortment',
-    name: 'Macaron Selection',
-    description: 'Delicate French macarons in seasonal flavours.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/36455119/pexels-photo-36455119.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'desserts',
-  },
-  {
-    id: 'latte',
-    name: 'Specialty Latte',
-    description: 'Espresso with steamed milk and signature art.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/15801079/pexels-photo-15801079.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'coffee',
-    featured: true,
-  },
-  {
-    id: 'pour-over',
-    name: 'Pour Over Coffee',
-    description: 'Single-origin beans, brewed to order.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/5151354/pexels-photo-5151354.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'coffee',
-  },
-  {
-    id: 'cat-latte',
-    name: 'Cat Latte',
-    description: 'Our signature latte with a playful twist.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/15801008/pexels-photo-15801008.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'coffee',
-  },
-  {
-    id: 'sprinkle-donut',
-    name: 'Sprinkle Donuts',
-    description: 'Glazed donuts with rainbow sprinkles.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/35081225/pexels-photo-35081225.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'snacks',
-    featured: true,
-  },
-  {
-    id: 'choc-chip-cookies',
-    name: 'Chocolate Chip Cookies',
-    description: 'Warm, gooey-centred cookies baked fresh.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/23948793/pexels-photo-23948793.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'snacks',
-  },
-  {
-    id: 'assorted-cookies',
-    name: 'Assorted Cookies',
-    description: 'A mix of our most-loved daily cookies.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/38179907/pexels-photo-38179907.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'snacks',
-  },
-  {
-    id: 'cupcake-raspberry',
-    name: 'Berry Cupcakes',
-    description: 'Fluffy cupcakes topped with fresh berries.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/20677473/pexels-photo-20677473.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'desserts',
-  },
-  {
-    id: 'cupcake-celebration',
-    name: 'Celebration Cupcakes',
-    description: 'Boldly iced cupcakes for every celebration.',
-    price: '₹—',
-    image: 'https://images.pexels.com/photos/8874015/pexels-photo-8874015.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-    category: 'desserts',
-  },
-];
+  // --- CAKES (16) ---
+  { id: 'c1', category: 'cakes', name: 'Black Forest', description: 'Classic chocolate sponge with fresh cream and cherries.', image: '/1.webp' },
+  { id: 'c2', category: 'cakes', name: 'Red Velvet', description: 'Rich red velvet sponge with premium cream cheese frosting.', image: '/2.webp' },
+  { id: 'c3', category: 'cakes', name: 'Pineapple Delight', description: 'Vanilla sponge layered with fresh cream and pineapple chunks.', image: '/3.webp' },
+  { id: 'c4', category: 'cakes', name: 'Butterscotch Crunch', description: 'Caramelised nuts and butterscotch cream on a vanilla base.', image: '/4.webp' },
+  { id: 'c5', category: 'cakes', name: 'Chocolate Truffle', description: 'Dense chocolate cake loaded with dark chocolate ganache.', image: '/5.webp' },
+  { id: 'c6', category: 'cakes', name: 'White Forest', description: 'Vanilla sponge, white chocolate flakes, and sweet cherries.', image: '/6.webp' },
+  { id: 'c7', category: 'cakes', name: 'Fresh Strawberry', description: 'Seasonal fresh strawberries folded into light whipped cream.', image: '/7.webp' },
+  { id: 'c8', category: 'cakes', name: 'Blueberry Bliss', description: 'Wild blueberry compote layered in a soft vanilla sponge.', image: '/8.webp' },
+  { id: 'c9', category: 'cakes', name: 'Mango Alphonso', description: 'Seasonal mango cream cake made with real Alphonso puree.', image: '/9.webp' },
+  { id: 'c10', category: 'cakes', name: 'Choco Vanilla', description: 'The perfect marbled blend of dark chocolate and vanilla bean.', image: '/10.webp' },
+  { id: 'c11', category: 'cakes', name: 'Coffee Walnut', description: 'Espresso-infused sponge with roasted walnuts and coffee cream.', image: '/11.webp' },
+  { id: 'c12', category: 'cakes', name: 'Salted Caramel', description: 'Vanilla sponge layered with house-made salted caramel sauce.', image: '/12.webp' },
+  { id: 'c13', category: 'cakes', name: 'Mixed Fresh Fruit', description: 'A light vanilla cake topped with a bounty of fresh seasonal fruits.', image: '/13.webp' },
+  { id: 'c14', category: 'cakes', name: 'Hazelnut Praline', description: 'Rich chocolate sponge with crunchy hazelnut praline paste.', image: '/14.webp' },
+  { id: 'c15', category: 'cakes', name: 'Classic Vanilla', description: 'Simple, elegant, and timeless Madagascar vanilla bean cake.', image: '/15.webp' },
+  { id: 'c16', category: 'cakes', name: 'Rainbow Celebration', description: 'Six vibrant layers of vanilla sponge with buttercream.', image: '/16.webp' },
 
-export const featuredCarouselItems = menuItems.filter((item) => item.featured);
+  // --- PASTRIES (8) ---
+  { id: 'p1', category: 'pastries', name: 'Black Forest Pastry', description: 'A slice of our classic black forest cake.', image: '/Black Forest Pastry (1).webp' },
+  { id: 'p2', category: 'pastries', name: 'Red Velvet Pastry', description: 'A slice of rich red velvet with cream cheese.', image: '/Honey Almond Pastry.webp' },
+  { id: 'p3', category: 'pastries', name: 'Pineapple Pastry', description: 'Light, fruity, and refreshing pineapple slice.', image: '/Fresh Fruit Pastry.webp' },
+  { id: 'p4', category: 'pastries', name: 'Chocolate Truffle Pastry', description: 'Decadent dark chocolate truffle in a personal slice.', image: '/Belgium Chocochip Pastry.webp' },
+  { id: 'p5', category: 'pastries', name: 'Butterscotch Pastry', description: 'Crunchy butterscotch praline slice.', image: '/Biscoff Cheescake Pastry.webp' },
+  { id: 'p6', category: 'pastries', name: 'Blueberry Pastry', description: 'Sweet Blueberry cream layered pastry.', image: '/Blue Berry Pastry.webp' },
+  { id: 'p7', category: 'pastries', name: 'Mango Pastry', description: 'Seasonal mango cream slice.', image: '/Fresh Fruit Pastry.webp' },
+  { id: 'p8', category: 'pastries', name: 'Choco Mocha Pastry', description: 'Chocolate and coffee layered perfection.', image: '/Belgium Chocochip Pastry.webp' },
+
+  // --- DESSERTS (4) ---
+  { id: 'd1', category: 'desserts', name: 'Chocolate Mousse', description: 'Airy, rich Belgian chocolate mousse cup.', image: '/Choco Chip Pudding.webp' },
+  { id: 'd2', category: 'desserts', name: 'Caramel Pudding', description: 'Silky smooth custard with a dark caramel glaze.', image: '/pudding.webp' },
+  { id: 'd3', category: 'desserts', name: 'Sizzling Brownie', description: 'Warm walnut brownie served with vanilla ice cream.', image: '/Choco Chip Pudding.webp' },
+  { id: 'd4', category: 'desserts', name: 'Tiramisu Cup', description: 'Coffee-soaked ladyfingers with mascarpone cheese.', image: '/pudding.webp' },
+
+  // --- COFFEE (4) ---
+  { id: 'cf1', category: 'coffee', name: 'Cappuccino', description: 'Perfectly extracted espresso with steamed milk and thick foam.', image: '/Cappuccino (1).webp' },
+  { id: 'cf2', category: 'coffee', name: 'Cafe Latte', description: 'Smooth espresso topped with silky steamed milk.', image: '/Americano (1).webp' },
+  { id: 'cf3', category: 'coffee', name: 'Espresso', description: 'A rich, bold, and concentrated shot of pure coffee.', image: '/Espresso.webp' },
+  { id: 'cf4', category: 'coffee', name: 'Cafe Mocha', description: 'Espresso blended with rich chocolate and steamed milk.', image: '/Cappuccino (1).webp' },
+
+  // --- SHAKES (8) ---
+  { id: 's1', category: 'shakes', name: 'Oreo Crunch Shake', description: 'Thick vanilla shake blended with crushed Oreo cookies.', image: '/Oreo Shake.webp' },
+  { id: 's2', category: 'shakes', name: 'Classic Chocolate', description: 'Rich chocolate ice cream blended with cold milk.', image: '/Chocolate Milkshake.webp' },
+  { id: 's3', category: 'shakes', name: 'Strawberry Dream', description: 'Sweet strawberries blended into a thick, creamy shake.', image: '/StrawberryShake.webp' },
+  { id: 's4', category: 'shakes', name: 'Vanilla Bean', description: 'Classic, smooth Madagascar vanilla shake.', image: '/Classic Vanilla Shake.webp' },
+  { id: 's5', category: 'shakes', name: 'Mango Smoothie', description: 'Fresh mangoes blended into a refreshing thick shake.', image: '/Mango Shake.webp' },
+  { id: 's6', category: 'shakes', name: 'KitKat Break', description: 'Chocolate shake loaded with crunchy KitKat pieces.', image: '/Kit Kat Shake.webp' },
+  { id: 's7', category: 'shakes', name: 'Cold Coffee Frappe', description: 'Our signature blended ice coffee.', image: '/Cold Coffee (1).webp' },
+  { id: 's8', category: 'shakes', name: 'Butterscotch Shake', description: 'Caramel and butterscotch blended into a sweet treat.', image: '/Caramel Toffee and Nut Praline Shake.webp' },
+
+  // --- DONUTS (4) ---
+  { id: 'dn1', category: 'donuts', name: 'Chocolate Glaze', description: 'Soft fluffy donut dipped in rich chocolate ganache.', image: '/Donut Chocolate.webp' },
+  { id: 'dn2', category: 'donuts', name: 'Strawberry Sprinkle', description: 'Pink strawberry icing topped with rainbow sprinkles.', image: '/Donut Chocolate (2) (1).webp' },
+  { id: 'dn3', category: 'donuts', name: 'Cinnamon Sugar', description: 'Classic warm donut tossed in cinnamon and sugar.', image: '/Donut Butter Scotch.webp' },
+  { id: 'dn4', category: 'donuts', name: 'Vanilla Custard', description: 'Filled with smooth vanilla custard and dusted with icing sugar.', image: '/Donut Chocolate.webp' },
+];

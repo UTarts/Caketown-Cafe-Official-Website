@@ -1,146 +1,111 @@
-import { useRef, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { categories } from '@/data/menu';
+import { ArrowRight } from '@/components/DecorativeGraphics';
 
-const platformColors = ['#F47A1F', '#E43838', '#4A2418', '#FFF7EE', '#FFDCCB'];
+// ==========================================
+// 🎛️ MANUAL CONTROL PANEL
+// ==========================================
+const CONTROLS = {
+  // 1. Raw Image Settings (Slightly larger to let the transparent shapes pop)
+  imgSizeMobile: 'w-28 h-28',
+  imgSizeDesktop: 'lg:w-40 lg:h-40',
+
+  // 2. Animation Physics
+  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+
+  // 3. Background Shape Motion
+  bgRest: { scale: 1, y: 0 },
+  bgHover: { scale: 1.04, y: -8 },
+
+  // 4. Image Motion
+  imgRest: { scale: 1, y: 0 },
+  imgHover: { scale: 1.15, y: -24 },
+};
+
+// ==========================================
+// 🎨 CATEGORIES & COLORS DATA
+// ==========================================
+const CATEGORIES = [
+  { id: 'cakes', label: 'Cakes', bgColor: '#F47A1F', textColor: '#FFFFFF', image: '/cake.webp' },
+  { id: 'pastries', label: 'Pastries', bgColor: '#E43838', textColor: '#FFFFFF', image: '/pastry.webp' },
+  { id: 'desserts', label: 'Desserts', bgColor: '#4A2418', textColor: '#FFFFFF', image: '/pudding.webp' },
+  { id: 'coffee', label: 'Coffee', bgColor: '#C59A75', textColor: '#111111', image: '/Americano.webp' },
+  { id: 'shakes', label: 'Shakes', bgColor: '#111111', textColor: '#FFFFFF', image: '/shake.webp' },
+  { id: 'donuts', label: 'Donuts', bgColor: '#D96A15', textColor: '#FFFFFF', image: '/donut.webp' },
+];
 
 export function Craving() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const handleScroll = () => {
-      const children = Array.from(el.children) as HTMLElement[];
-      if (children.length === 0) return;
-      const center = el.scrollLeft + el.offsetWidth / 2;
-      let closest = 0;
-      let closestDist = Infinity;
-      children.forEach((child, i) => {
-        const childCenter = child.offsetLeft + child.offsetWidth / 2;
-        const dist = Math.abs(center - childCenter);
-        if (dist < closestDist) { closestDist = dist; closest = i; }
-      });
-      setActiveIndex(closest);
-    };
-    el.addEventListener('scroll', handleScroll, { passive: true });
-    return () => el.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <section className="bg-caketown-cream py-20 sm:py-24 lg:py-28 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 mb-8 lg:mb-10">
-        <div className="flex items-end justify-between gap-4">
+    <section className="bg-caketown-cream py-20 lg:py-32 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        
+        {/* Header & Link Row */}
+        <div className="mb-14 flex flex-col lg:flex-row items-center lg:items-end justify-between gap-6 text-center lg:text-left">
           <div>
             <span className="text-xs font-semibold tracking-[0.25em] uppercase text-caketown-orange block mb-2">
               Find your flavour
             </span>
             <h2 className="font-display font-extrabold tracking-tightest leading-[0.9] text-caketown-black text-[12vw] sm:text-[8vw] lg:text-[5rem]">
-              WHAT ARE
-              <br />
-              YOU CRAVING?
+              WHAT ARE<br />YOU CRAVING?
             </h2>
           </div>
-          <Link
-            to="/menu"
-            className="hidden lg:inline-flex items-center gap-2 text-sm font-semibold text-caketown-black/60 hover:text-caketown-orange transition-colors flex-shrink-0 pb-2"
+          
+          {/* Explore Link */}
+          <Link 
+            to="/menu" 
+            className="group inline-flex items-center gap-2 text-sm font-bold tracking-widest uppercase text-caketown-black/60 hover:text-caketown-orange transition-colors pb-2"
           >
-            Browse all
-            <span>→</span>
+            Explore all items
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
-      </div>
 
-      {/* Mobile: horizontal scroll-snap. Desktop: editorial grid */}
-      <div
-        ref={scrollRef}
-        className="no-scrollbar flex lg:grid lg:grid-cols-5 overflow-x-auto snap-x-mandatory lg:overflow-visible gap-4 lg:gap-3 px-5 lg:px-12"
-      >
-        {categories.map((cat, i) => {
-          const isActive = i === activeIndex;
-          const color = platformColors[i % platformColors.length];
-          const isLight = color === '#FFF7EE' || color === '#FFDCCB';
-          const scaleMobile = isActive ? 1 : 0.88;
-          const isDesktopOffset = i === 0 || i === 4;
-
-          return (
-            <Link
+        {/* 6-Column Grid Layout */}
+        <div className="grid grid-cols-2 lg:grid-cols-6 gap-x-4 gap-y-16 lg:gap-x-6 lg:gap-y-0 mt-12">
+          {CATEGORIES.map((cat) => (
+            
+            <motion.div
               key={cat.id}
-              to="/menu"
-              className="snap-center flex-shrink-0 lg:flex-shrink group block"
-              style={{
-                width: '78vw',
-                maxWidth: '320px',
-              }}
+              initial="rest"
+              whileHover="hover"
+              whileTap="hover"
+              animate="rest"
             >
-              <div
-                className="relative"
-                style={{
-                  transform: `scale(${scaleMobile})`,
-                  transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                  marginTop: isDesktopOffset ? '0' : '24px',
-                }}
-              >
-                {/* Colored rectangular platform */}
-                <div
-                  className="relative rounded-2xl overflow-visible flex flex-col items-center justify-end pb-6 pt-20"
-                  style={{
-                    backgroundColor: color,
-                    height: '220px',
-                    transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                  }}
+              <Link to="/menu" className="relative block pt-12 lg:pt-16 outline-none">
+                
+                {/* 1. The Square Background */}
+                <motion.div
+                  variants={{ rest: CONTROLS.bgRest, hover: CONTROLS.bgHover }}
+                  transition={CONTROLS.transition}
+                  className="w-full aspect-square rounded-[2rem] flex items-end justify-center pb-6 lg:pb-8 shadow-md"
+                  style={{ backgroundColor: cat.bgColor }}
                 >
-                  {/* Food image breaking out above the platform */}
-                  <div
-                    className="absolute left-1/2 -translate-x-1/2 z-10"
-                    style={{
-                      top: '-60px',
-                      width: '140px',
-                      height: '140px',
-                      transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                    }}
+                  <h3 
+                    className="font-display font-bold text-lg lg:text-xl tracking-tight" 
+                    style={{ color: cat.textColor }}
                   >
-                    <img
-                      src={cat.image}
-                      alt={cat.label}
-                      loading="lazy"
-                      className="w-full h-full object-cover rounded-xl shadow-xl shadow-caketown-black/15 transition-transform duration-400 group-hover:scale-105 group-hover:-translate-y-2"
-                    />
-                  </div>
+                    {cat.label}
+                  </h3>
+                </motion.div>
 
-                  {/* Label on the platform */}
-                  <div className="relative z-20 text-center">
-                    <h3
-                      className={`font-display font-bold text-lg ${isLight ? 'text-caketown-black' : 'text-white'}`}
-                    >
-                      {cat.label}
-                    </h3>
-                    <span
-                      className={`text-[11px] font-medium mt-0.5 block ${isLight ? 'text-caketown-black/50' : 'text-white/60'}`}
-                    >
-                      Tap to explore
-                    </span>
-                  </div>
+                {/* 2. The Raw Overlapping Image */}
+                <div className="absolute top-0 left-0 right-0 flex justify-center pointer-events-none">
+                  <motion.img
+                    variants={{ rest: CONTROLS.imgRest, hover: CONTROLS.imgHover }}
+                    transition={CONTROLS.transition}
+                    src={cat.image}
+                    alt={cat.label}
+                    // Removed borders, backgrounds, and switched to object-contain & drop-shadow
+                    className={`${CONTROLS.imgSizeMobile} ${CONTROLS.imgSizeDesktop} object-contain drop-shadow-2xl pointer-events-auto`}
+                  />
                 </div>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
 
-      {/* Mobile hint dots */}
-      <div className="flex justify-center gap-1.5 mt-6 lg:hidden">
-        {categories.map((_, i) => (
-          <span
-            key={i}
-            className="h-1.5 rounded-full transition-all duration-300"
-            style={{
-              width: i === activeIndex ? '20px' : '6px',
-              backgroundColor: i === activeIndex ? '#F47A1F' : 'rgba(17,17,17,0.12)',
-            }}
-          />
-        ))}
+              </Link>
+            </motion.div>
+
+          ))}
+        </div>
+
       </div>
     </section>
   );

@@ -1,120 +1,89 @@
-import { useState } from 'react';
-import { FoodCarousel } from '@/components/FoodCarousel';
-import { CTA } from '@/components/CTA';
-import { menuItems, categories, type MenuCategory } from '@/data/menu';
-import {
-  CakeSliceIcon,
-  CroissantIcon,
-  DessertCupIcon,
-  CoffeeCupIcon,
-  CookieIcon,
-} from '@/components/DecorativeGraphics';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowRight } from '@/components/DecorativeGraphics';
+import { menuItems } from '@/data/menu';
+import { Reveal } from '@/components/Reveal';
 
-const categoryIcons: Record<MenuCategory, typeof CakeSliceIcon> = {
-  cakes: CakeSliceIcon,
-  pastries: CroissantIcon,
-  desserts: DessertCupIcon,
-  coffee: CoffeeCupIcon,
-  snacks: CookieIcon,
-};
-
-const categoryBg: Record<MenuCategory, string> = {
-  cakes: '#F47A1F',
-  pastries: '#E43838',
-  desserts: '#4A2418',
-  coffee: '#F47A1F',
-  snacks: '#E43838',
-};
+// Curate exactly 4 items to showcase as "Today's Favourites"
+// Using IDs from your new menu data
+const curatedIds = ['c5', 'cf1', 'dn2', 'p1']; 
+const favourites = curatedIds.map(id => menuItems.find(item => item.id === id)).filter(Boolean) as typeof menuItems;
 
 export function MenuCarousel() {
-  const [activeCat, setActiveCat] = useState<MenuCategory>('cakes');
-  const [transitioning, setTransitioning] = useState(false);
-
-  const filtered = menuItems.filter((item) => item.category === activeCat);
-  const bgColor = categoryBg[activeCat];
-
-  const handleCategoryChange = (cat: MenuCategory) => {
-    if (cat === activeCat) return;
-    setTransitioning(true);
-    setTimeout(() => {
-      setActiveCat(cat);
-      setTransitioning(false);
-    }, 250);
-  };
-
   return (
-    <section className="relative py-20 sm:py-24 lg:py-28 overflow-hidden transition-colors duration-700" style={{ backgroundColor: bgColor }}>
+    <section className="bg-[#FDFBF7] py-24 lg:py-32 overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        {/* Heading */}
-        <div className="text-center mb-8">
-          <span className="text-xs font-semibold tracking-[0.25em] uppercase text-white/60 block mb-2">
-            Swipe to explore
-          </span>
-          <h2 className="font-display font-extrabold tracking-tightest leading-[0.9] text-white text-[10vw] sm:text-[7vw] lg:text-[5rem]">
-            TODAY'S
-            <br />
-            FAVOURITES
-          </h2>
+        
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
+          <div>
+            <Reveal>
+              <span className="text-[10px] sm:text-xs font-semibold tracking-[0.3em] uppercase text-caketown-orange block mb-4">
+                Chef's Selection
+              </span>
+            </Reveal>
+            <Reveal delay={100}>
+              <h2 className="font-display font-black tracking-tighter leading-[0.9] text-caketown-black text-[12vw] sm:text-[8vw] lg:text-[5.5rem]">
+                TODAY'S <br />
+                <span className="font-serif italic font-medium text-caketown-orange tracking-normal lowercase pr-2">favourites.</span>
+              </h2>
+            </Reveal>
+          </div>
+          
+          <Reveal delay={200}>
+            <Link
+              to="/menu"
+              className="group hidden md:inline-flex items-center gap-2 text-sm font-bold tracking-widest uppercase text-caketown-black/60 hover:text-caketown-orange transition-colors pb-2"
+            >
+              View Full Menu
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          </Reveal>
         </div>
 
-        {/* Category icon navigation */}
-        <div className="flex justify-center gap-1 sm:gap-2 mb-8">
-          {categories.map((cat) => {
-            const Icon = categoryIcons[cat.id];
-            const isActive = cat.id === activeCat;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => handleCategoryChange(cat.id)}
-                className="group flex flex-col items-center gap-1 px-3 sm:px-5 py-2 rounded-2xl transition-all duration-300 active:scale-95"
-                style={{
-                  backgroundColor: isActive ? 'rgba(255,255,255,0.15)' : 'transparent',
-                }}
-              >
-                <Icon
-                  className="w-7 h-7 sm:w-8 sm:h-8 transition-all duration-300"
-                  style={{
-                    color: 'white',
-                    opacity: isActive ? 1 : 0.5,
-                    transform: isActive ? 'scale(1.1)' : 'scale(0.9)',
-                  }}
-                />
-                <span
-                  className="text-[10px] sm:text-xs font-semibold tracking-wide transition-all duration-300"
-                  style={{
-                    color: 'white',
-                    opacity: isActive ? 1 : 0.5,
-                    fontWeight: isActive ? 700 : 500,
-                  }}
-                >
-                  {cat.label}
-                </span>
-                {/* Active marker */}
-                <span
-                  className="h-0.5 rounded-full bg-white transition-all duration-300"
-                  style={{ width: isActive ? '20px' : '0px' }}
-                />
-              </button>
-            );
-          })}
+        {/* 4-Column Editorial Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {favourites.map((item, index) => (
+            <Reveal key={item.id} delay={index * 100}>
+              <Link to="/menu" className="group block outline-none">
+                
+                {/* Framed Square-Cropped Image */}
+                <div className="relative aspect-square rounded-[2rem] overflow-hidden bg-white shadow-sm border border-black/5 mb-6">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  {/* Subtle overlay on hover */}
+                  <div className="absolute inset-0 bg-caketown-orange/0 group-hover:bg-caketown-orange/10 transition-colors duration-500" />
+                </div>
+                
+                {/* Typography */}
+                <div className="px-2 text-center sm:text-left">
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-caketown-black/40 block mb-1.5">
+                    {item.category}
+                  </span>
+                  <h3 className="font-display font-bold text-caketown-black text-lg lg:text-xl leading-tight transition-colors group-hover:text-caketown-orange">
+                    {item.name}
+                  </h3>
+                </div>
+                
+              </Link>
+            </Reveal>
+          ))}
         </div>
-      </div>
 
-      {/* Product carousel — with transition */}
-      <div
-        style={{
-          opacity: transitioning ? 0 : 1,
-          transform: transitioning ? 'translateX(-20px)' : 'translateX(0)',
-          transition: 'opacity 0.25s ease, transform 0.25s ease',
-        }}
-      >
-        <FoodCarousel items={filtered.length > 0 ? filtered : menuItems.slice(0, 4)} textOnDark />
-      </div>
+        {/* Mobile-only CTA */}
+        <div className="mt-12 flex justify-center md:hidden">
+          <Link
+            to="/menu"
+            className="group inline-flex items-center gap-2 rounded-full bg-caketown-black text-white px-8 py-4 text-sm font-bold uppercase tracking-widest hover:bg-caketown-orange transition-all duration-300 shadow-lg active:scale-95"
+          >
+            View Full Menu
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
+        </div>
 
-      <div className="text-center mt-10">
-        <CTA to="/menu" variant="white">
-          View Full Menu
-        </CTA>
       </div>
     </section>
   );
