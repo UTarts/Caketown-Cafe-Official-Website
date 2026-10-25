@@ -105,7 +105,7 @@ export function Footer() {
               </div>
               <div className="flex flex-col">
                 <a 
-                  href="https://bandhansweets.com" 
+                  href="https://bandhansweets.pages.dev/" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 text-lg font-display font-bold text-white hover:text-caketown-orange transition-colors leading-tight"

@@ -85,7 +85,7 @@ export function Header() {
             
             {/* Bandhan Sweets Logo */}
             <a
-              href="https://bandhansweets.com"
+              href="https://bandhansweets.pages.dev/"
               target="_blank"
               rel="noopener noreferrer"
               className={`flex items-center gap-3 border-l pl-6 ml-2 transition-all duration-700 ${
