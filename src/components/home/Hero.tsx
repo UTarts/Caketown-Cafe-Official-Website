@@ -1,33 +1,37 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { ArrowRight } from '@/components/DecorativeGraphics';
+import { useCaketown } from '@/context/CaketownStore';
 
 const HERO_MEDIA = [
   { type: 'video', src: '/bakery2.webm' },
   { type: 'video', src: '/bakery.webm' },
-  { type: 'image', src: 'https://images.pexels.com/photos/18721993/pexels-photo-18721993.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800' }
+  {
+    type: 'image',
+    src: 'https://images.pexels.com/photos/18721993/pexels-photo-18721993.jpeg?auto=compress&cs=tinysrgb&h=1200&w=1800',
+  },
 ];
 
 export function Hero() {
+  const { theme } = useCaketown();
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveIndex((current) => (current + 1) % HERO_MEDIA.length);
-    }, 5000);
+    }, 5500);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    // Restored to min-h-[100svh] so the background media covers the full screen
-    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-caketown-black">
-      
-      {/* Background Media */}
+    <section className="relative min-h-[100svh] flex flex-col justify-between overflow-hidden bg-caketown-black">
+      {/* Background Video / Media Layer */}
       <div className="absolute inset-0 z-0">
         {HERO_MEDIA.map((media, i) => {
           const isActive = i === activeIndex;
           return (
-            <div 
+            <div
               key={i}
               className="absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out"
               style={{ opacity: isActive ? 1 : 0, zIndex: isActive ? 10 : 0 }}
@@ -38,8 +42,8 @@ export function Hero() {
                   alt="Caketown Cafe Atmosphere"
                   className="w-full h-full object-cover"
                   style={{
-                    transform: isActive ? 'scale(1.1)' : 'scale(1)',
-                    transition: isActive ? 'transform 10s ease-out' : 'none'
+                    transform: isActive ? 'scale(1.08)' : 'scale(1)',
+                    transition: isActive ? 'transform 8s ease-out' : 'none',
                   }}
                 />
               ) : (
@@ -55,41 +59,86 @@ export function Hero() {
             </div>
           );
         })}
-        <div className="absolute inset-0 bg-black/40 z-20 pointer-events-none" />
+        {/* Multi-Stop Editorial Vignette */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/75 z-20 pointer-events-none" />
       </div>
 
-      {/* Typography & CTA */}
-      <div className="relative z-30 w-full max-w-5xl mx-auto px-5 sm:px-8 text-center pt-16">
-        
-        <div className="mb-4">
-          <span className="text-[11px] sm:text-xs font-display font-semibold tracking-[0.3em] uppercase text-caketown-orange drop-shadow-md">
-            Caketown Cafe
+      {/* Top Spacer for Fixed Header */}
+      <div className="h-24" />
+
+      {/* Center Kinetic Typography & CTA */}
+      <div className="relative z-30 w-full max-w-6xl mx-auto px-5 sm:px-8 text-center my-auto py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2.5 px-4 py-1.5  bg-white/10 backdrop-blur-md border border-white/15 mb-6"
+        >
+          <span
+            className="w-2 h-2 rounded-full animate-pulse"
+            style={{ backgroundColor: theme.brandOrange }}
+          />
+          <span className="text-[10px] sm:text-xs font-display font-bold tracking-[0.28em] uppercase text-white">
+            {theme.heroEyebrow}
           </span>
-        </div>
+        </motion.div>
 
-        {/* Font size controlled so the text doesn't fill the screen width */}
-        <h1 className="font-display font-extrabold tracking-tightest leading-[0.92] text-white text-[13vw] sm:text-[10vw] lg:text-[6.5rem] drop-shadow-lg">
-          <span className="block">CAKE.</span>
-          <span className="block">COFFEE.</span>
-          <span className="block text-caketown-orange">GOOD TIMES.</span>
-        </h1>
+        <motion.h1
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="font-display font-extrabold tracking-tightest leading-[0.9] text-white text-[13vw] sm:text-[10vw] lg:text-[6.8rem] drop-shadow-2xl"
+        >
+          <span className="block">{theme.heroLine1}</span>
+          <span className="block">{theme.heroLine2}</span>
+          <span className="block" style={{ color: theme.brandOrange }}>
+            {theme.heroLine3}
+          </span>
+        </motion.h1>
 
-        {/* Subtext forced onto a single line */}
-        <p className="mt-5 sm:mt-6 text-sm sm:text-base text-white/90 w-full flex justify-center font-medium drop-shadow-md whitespace-nowrap">
-          Cakes, pastries, desserts and coffee | baked fresh, served with a smile.
-        </p>
+        <motion.p
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.25 }}
+          className="mt-5 sm:mt-6 text-xs sm:text-base text-white/85 max-w-xl mx-auto font-medium drop-shadow-md"
+        >
+          {theme.heroSubtext}
+        </motion.p>
 
-        {/* Button is thin (py-3) and wide (px-20) */}
-        <div className="mt-10 flex justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.35 }}
+          className="mt-9 flex flex-wrap items-center justify-center gap-4"
+        >
           <Link
             to="/menu"
-            className="group inline-flex items-center justify-center gap-3 rounded-full bg-caketown-orange text-white px-20 py-3 sm:px-24 sm:py-3.5 text-sm font-bold tracking-widest uppercase hover:bg-white hover:text-caketown-black transition-all duration-300 shadow-xl shadow-black/20 active:scale-95 whitespace-nowrap"
+            style={{ backgroundColor: theme.brandOrange }}
+            className="group inline-flex items-center justify-center gap-3  text-white px-12 py-3.5 sm:px-16 sm:py-4 text-xs sm:text-sm font-bold tracking-[0.2em] uppercase hover:bg-white hover:text-caketown-black transition-all duration-300 shadow-2xl active:scale-95"
           >
             Explore Menu
-            <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
-        </div>
 
+          <Link
+            to="/locations"
+            className="inline-flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-3.5 sm:py-4 text-xs sm:text-sm font-bold tracking-[0.18em] uppercase hover:bg-white hover:text-caketown-black transition-all duration-300"
+          >
+            3 Outlets
+          </Link>
+        </motion.div>
+      </div>
+
+      {/* Bottom Infinite Kinetic Bakery Ticker */}
+      <div className="relative z-30 border-t border-white/10 bg-black/60 backdrop-blur-md py-3 overflow-hidden">
+        <motion.div
+          animate={{ x: ['0%', '-50%'] }}
+          transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
+          className="flex w-max whitespace-nowrap gap-10 text-[11px] font-display font-bold tracking-[0.24em] uppercase text-white/80"
+        >
+          <span>{theme.tickerText}</span>
+          <span>{theme.tickerText}</span>
+        </motion.div>
       </div>
     </section>
   );

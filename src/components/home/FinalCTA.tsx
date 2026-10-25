@@ -1,40 +1,48 @@
+import { Link } from 'react-router-dom';
 import { Reveal } from '@/components/Reveal';
-import { CTA } from '@/components/CTA';
+import { ArrowUpRight } from 'lucide-react';
 
 export function FinalCTA() {
   return (
-    <section className="relative bg-caketown-black text-white py-24 sm:py-32 lg:py-40 px-5 sm:px-8 lg:px-12 overflow-hidden">
-      {/* Decorative shape */}
-      <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-[40vw] h-[40vw] max-w-[400px] max-h-[400px] opacity-5 pointer-events-none">
-        <svg viewBox="0 0 100 100" className="w-full h-full" preserveAspectRatio="none">
-          <path
-            d="M 50,2 C 75,2 98,22 98,48 C 98,72 82,98 52,98 C 28,98 2,82 2,52 C 2,26 22,2 50,2 Z"
-            fill="#F47A1F"
-          />
-        </svg>
-      </div>
-
-      <div className="relative max-w-7xl mx-auto text-center">
+    <section className="relative bg-[#111111] text-white py-28 sm:py-36 lg:py-44 px-5 sm:px-8 lg:px-12 overflow-hidden border-t border-white/12">
+      {/* Subtle Architectural Grid Lines */}
+      <div className="max-w-7xl mx-auto relative z-10 text-center">
         <Reveal>
-          <p className="text-xs font-semibold tracking-[0.3em] uppercase text-caketown-orange mb-6">
-            The door is open
+          <p className="text-xs font-bold tracking-[0.32em] uppercase text-[#F47A1F] mb-6">
+            THE DOOR IS OPEN
           </p>
         </Reveal>
+
         <Reveal delay={80}>
-          <h2 className="font-display font-extrabold tracking-tightest leading-[0.85] text-[20vw] sm:text-[16vw] lg:text-[12rem]">
+          <h2 className="font-display font-extrabold tracking-tightest leading-[0.85] text-[20vw] sm:text-[16vw] lg:text-[12rem] select-none">
             COME
             <br />
-            <span className="text-caketown-orange">HUNGRY.</span>
+            <span className="text-[#F47A1F]">HUNGRY.</span>
           </h2>
         </Reveal>
+        <Reveal>
+          <p className="text-lg font-display tracking-[0.32em] uppercase mt-12">
+            LEAVE WITH A REASON TO <span className="font-extrabold text-[#F47A1F]">COME BACK.</span>
+          </p>
+        </Reveal>
+
         <Reveal delay={160}>
-          <div className="mt-10 flex flex-wrap gap-4 justify-center">
-            <CTA to="/menu" variant="orange">
-              Explore Menu
-            </CTA>
-            <CTA to="/contact" variant="white">
-              Visit Us
-            </CTA>
+          <div className="mt-12 flex flex-wrap gap-4 justify-center">
+            <Link
+              to="/menu"
+              className="group inline-flex items-center gap-3 bg-[#F47A1F] text-white px-9 py-4 text-xs font-bold uppercase tracking-[0.22em] hover:bg-white hover:text-[#111111] transition-colors rounded-none"
+            >
+              <span>Explore Menu</span>
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+
+            <Link
+              to="/locations"
+              className="group inline-flex items-center gap-3 bg-white text-[#111111] px-9 py-4 text-xs font-bold uppercase tracking-[0.22em] hover:bg-[#F47A1F] hover:text-white transition-colors rounded-none"
+            >
+              <span>Visit Us</span>
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
           </div>
         </Reveal>
       </div>

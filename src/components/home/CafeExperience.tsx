@@ -52,7 +52,7 @@ export function CafeExperience() {
   }, []);
 
   return (
-    <section className="relative bg-caketown-black text-white py-0 overflow-hidden">
+    <section className="relative bg-caketown-black text-white py-0 overflow-hidden h-[50vh] sm:h-[60vh]">
       <div ref={ref} className="relative h-[80vh] sm:h-[90vh] overflow-hidden bg-[#111]">
         
         {/* Media Layer */}
@@ -96,7 +96,7 @@ export function CafeExperience() {
         {/* Gradient Overlay & Text Content */}
         <div className="absolute inset-0 bg-gradient-to-t from-caketown-black via-caketown-black/30 to-transparent z-20 pointer-events-none" />
         
-        <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8 lg:p-12 z-30 pointer-events-none">
+        <div className="absolute bottom-22 left-0 right-0 p-5 sm:p-8 lg:p-12 z-30 pointer-events-none">
           <div className="max-w-7xl mx-auto">
             <AnimatedHeading
               lines={['COME FOR', 'THE CAKE.', 'STAY FOR', 'THE MOMENT.']}

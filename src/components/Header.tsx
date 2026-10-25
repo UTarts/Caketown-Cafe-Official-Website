@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { MobileMenu } from './MobileMenu';
+import { ArrowUpRight } from 'lucide-react';
 
 const navLinks = [
   { label: 'Home', path: '/' },
@@ -101,27 +102,32 @@ export function Header() {
             </a>
           </nav>
 
-          {/* Desktop CTA */}
-          <Link
-            to="/contact"
-            className={`hidden lg:inline-flex shrink-0 items-center gap-2 rounded-full font-bold tracking-widest uppercase transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] active:scale-95 whitespace-nowrap ${
-              isAtTop
-                ? 'bg-white text-caketown-black hover:bg-caketown-orange hover:text-white px-8 py-3 text-[12px] shadow-lg'
-                : 'bg-caketown-black text-white hover:bg-caketown-orange px-6 py-2.5 text-[12px]'
-            }`}
-          >
-            Start Order
-          </Link>
+          {/* Right: Sharp Rectangular CTA */}
+          <div className="hidden lg:flex items-center shrink-0 translate-x-[0px] translate-y-[0px] scale-[1]">
+            <Link
+              to="/contact"
+              className={`inline-flex items-center gap-2 px-6 py-3 text-[11px] font-bold tracking-[0.2em] uppercase transition-all duration-300 rounded-none ${
+                isAtTop
+                  ? 'bg-[#F47A1F] text-white hover:bg-white hover:text-[#111111]'
+                  : 'bg-[#111111] text-white hover:bg-[#F47A1F]'
+              }`}
+            >
+              <span>Start Order</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
 
-          {/* Mobile hamburger */}
+          {/* Mobile Hamburger */}
           <button
             onClick={() => setMenuOpen(true)}
-            className={`lg:hidden flex flex-col gap-1.5 p-2 -mr-2 ${textColor}`}
+            className={`lg:hidden flex flex-col gap-1.5 p-2 ${
+              isAtTop ? 'text-white' : 'text-[#111111]'
+            }`}
             aria-label="Open menu"
           >
-            <span className="w-6 h-0.5 bg-current rounded-full" />
-            <span className="w-6 h-0.5 bg-current rounded-full" />
-            <span className="w-4 h-0.5 bg-current rounded-full" />
+            <span className="w-6 h-0.5 bg-current" />
+            <span className="w-6 h-0.5 bg-current" />
+            <span className="w-4 h-0.5 bg-[#F47A1F]" />
           </button>
         </div>
       </header>
